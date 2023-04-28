@@ -1,4 +1,5 @@
-import {Entity, Column} from "typeorm";
+import {Entity, Column, OneToMany, JoinColumn} from "typeorm";
+import { Horario } from "../horarios/entities/horario.entity"
 
 @Entity()
 export class Usuario{
@@ -32,7 +33,12 @@ export class Usuario{
     @Column()
     estado: boolean;
 
+    
     @Column({type: "timestamp", default: () => "CURRENT_TIMESTAMP"})
     cretedAt: Date;
+
+    @OneToMany(() => Horario, horario => horario.usuario_id)
+    @JoinColumn({name: "horario_id"})
+    horario_id: Horario[];
 }
 

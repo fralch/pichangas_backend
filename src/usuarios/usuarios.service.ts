@@ -8,10 +8,7 @@ import {createUsuarioDto} from './dto/create-usuario.dto'
 
 @Injectable()
 export class UsuariosService {
-    constructor(
-        @InjectRepository(Usuario)
-        private usersRepository: Repository<Usuario>,
-      ) {}
+    constructor(@InjectRepository(Usuario)private usersRepository: Repository<Usuario>,) {}
     
 
       createUsuario(usuario: createUsuarioDto) {

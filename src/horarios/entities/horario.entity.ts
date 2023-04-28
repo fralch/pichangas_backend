@@ -1,19 +1,32 @@
 //crear entidad para horario de reservas de canchas de futbol
-export class Horario {
-    id: number;
-    hora: string;
-    estado: boolean;
-    fecha: Date;
-    cancha_id: number;
-    usuario_id: number;
-    constructor(id: number, hora: string, estado: boolean, fecha: Date, cancha: number, usuario: number) {
-        this.id = id;
-        this.hora = hora;
-        this.estado = estado;
-        this.fecha = fecha;
-        this.cancha_id = cancha;
-        this.usuario_id = usuario;
-    }
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm';
+import {Usuario} from './../../usuarios/usuario.entity';
 
-    
+@Entity()
+export class Horario {
+    @PrimaryGeneratedColumn({type: "int"})
+    id: number;
+
+    @Column({type: "varchar", length: 10})
+    hora: string;
+
+    @Column({type: "boolean", default: true})
+    estado: boolean;
+
+    @Column({type: "date"})
+    fecha: Date;
+
+    @Column({type: "int"})
+    cancha_id: number;
+
+
+    @Column({type: "timestamp", default: () => "CURRENT_TIMESTAMP"})
+    cretedAt: Date;
+
+    @ManyToOne(() => Usuario, usuario => usuario.horario_id)
+    @JoinColumn({name: "usuario_id"})
+    usuario_id: Usuario;
+
+
+  
 }

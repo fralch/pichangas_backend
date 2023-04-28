@@ -1,9 +1,16 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateHorarioDto } from './dto/create-horario.dto';
+import { Horario } from './entities/horario.entity'; 
 import { UpdateHorarioDto } from './dto/update-horario.dto';
+
 
 @Injectable()
 export class HorariosService {
+  constructor( @InjectRepository(Horario) private horarioRepository: Repository<Horario>) {}
+
+
   create(createHorarioDto: CreateHorarioDto) {
     return 'This action adds a new horario';
   }
