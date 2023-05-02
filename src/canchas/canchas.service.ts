@@ -9,8 +9,8 @@ import { Cancha } from './entities/cancha.entity';
 export class CanchasService {
   constructor( @InjectRepository(Cancha) private canchaRepository: Repository<Cancha>) {}
 
-  async create(createCanchaDto: CreateCanchaDto) {
-    const nuevoCancha =  await  this.canchaRepository.create(createCanchaDto);
+  create(createCanchaDto: CreateCanchaDto) {
+    const nuevoCancha =  this.canchaRepository.create(createCanchaDto);
     return this.canchaRepository.save(nuevoCancha);
   }
 
