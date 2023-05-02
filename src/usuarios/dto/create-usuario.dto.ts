@@ -8,5 +8,4 @@ export class createUsuarioDto{
     telefono: string;
     direccion: string;
     estado: boolean;
-
 }

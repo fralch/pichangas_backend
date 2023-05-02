@@ -12,7 +12,8 @@ export class HorariosService {
 
 
   create(createHorarioDto: CreateHorarioDto) {
-    return 'This action adds a new horario';
+    const nuevo = this.horarioRepository.create(createHorarioDto);
+    return this.horarioRepository.save(nuevo);
   }
 
   findAll() {

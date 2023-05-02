@@ -1,9 +1,10 @@
+import { Usuario } from "src/usuarios/usuario.entity";
+
+
 export class CreateHorarioDto {
-    id: number;
     hora: string;
     estado: boolean;
     fecha: Date;
     cancha_id?: number;
-
-
+    usuario_id?: Usuario;
 }

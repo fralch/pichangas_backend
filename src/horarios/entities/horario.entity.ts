@@ -1,6 +1,7 @@
 //crear entidad para horario de reservas de canchas de futbol
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm';
 import {Usuario} from './../../usuarios/usuario.entity';
+import { Cancha } from 'src/canchas/entities/cancha.entity';
 
 @Entity()
 export class Horario {
@@ -16,12 +17,13 @@ export class Horario {
     @Column({type: "date"})
     fecha: Date;
 
-    @Column({type: "int"})
-    cancha_id: number;
-
-
     @Column({type: "timestamp", default: () => "CURRENT_TIMESTAMP"})
     cretedAt: Date;
+
+    @ManyToOne(() => Cancha, cancha => cancha.horario_id)
+    @JoinColumn({name: "cancha_id"})
+    cancha_id: number;
+    
 
     @ManyToOne(() => Usuario, usuario => usuario.horario_id)
     @JoinColumn({name: "usuario_id"})
