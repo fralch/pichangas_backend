@@ -14,19 +14,26 @@ export class CanchasService {
     return this.canchaRepository.save(nuevoCancha);
   }
 
-  findAll() {
-    return `This action returns all canchas`;
+  async findAll() : Promise<Cancha[]> {
+    return await this.canchaRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} cancha`;
+  findOne_cancha(id: number) {
+    const cancha = this.canchaRepository.findOne({ where: { id } });
+    if (!cancha) {
+      throw new Error(`Cancha #${id} not found`);
+    }
+    return cancha;
   }
 
-  update(id: number, updateCanchaDto: UpdateCanchaDto) {
-    return `This action updates a #${id} cancha`;
+  async update(id: number, actualizarCanchaDto: UpdateCanchaDto) {
+    const cancha = await this.findOne_cancha(id);
+    Object.assign(cancha, actualizarCanchaDto);
+    return  this.canchaRepository.save(cancha);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} cancha`;
+ async remove(id: number) {
+    const cancha = await this.findOne_cancha(id);
+    return this.canchaRepository.remove(cancha);
   }
 }

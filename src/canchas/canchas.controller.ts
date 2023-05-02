@@ -19,7 +19,7 @@ export class CanchasController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.canchasService.findOne(+id);
+    return this.canchasService.findOne_cancha(+id);
   }
 
   @Patch(':id')
