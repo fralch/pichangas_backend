@@ -1,4 +1,6 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete , UseInterceptors, UploadedFile } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
 import { CanchasService } from './canchas.service';
 import { CreateCanchaDto } from './dto/create-cancha.dto';
 import { UpdateCanchaDto } from './dto/update-cancha.dto';
@@ -8,9 +10,37 @@ export class CanchasController {
   constructor(private readonly canchasService: CanchasService) {}
 
   @Post()
-  create(@Body() createCanchaDto: CreateCanchaDto) {
+  @UseInterceptors(FileInterceptor('foto', {
+    storage: diskStorage({
+      destination: './uploads',
+      filename: (req, file, cb) => {
+        const fileName = `${Date.now()}-${file.originalname}`;
+        cb(null, fileName);
+      }
+    })
+  }))
+  async create(@Body() createCanchaDto: CreateCanchaDto, @UploadedFile() file?: Express.Multer.File) {
+    if (file) {
+      createCanchaDto.fotos = file.filename;
+    }
     return this.canchasService.create(createCanchaDto);
   }
+
+  @Patch('fotos/:id')
+  @UseInterceptors(FileInterceptor('fotos', {
+    storage: diskStorage({
+      destination: './uploads',
+      filename: (req, file, cb) => {
+        const fileName = `${Date.now()}-${file.originalname}`;
+        cb(null, fileName);
+      }
+    })
+  }))
+  async addFoto(@Param('id') id: string, @UploadedFile() file: Express.Multer.File) {
+    return this.canchasService.addFoto(+id, file.filename);
+  }
+
+
 
   @Get()
   findAll() {

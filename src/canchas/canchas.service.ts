@@ -36,4 +36,10 @@ export class CanchasService {
     const cancha = await this.findOne_cancha(id);
     return this.canchaRepository.remove(cancha);
   }
+
+  async addFoto(id: number, foto: string) {
+    const cancha = await this.findOne_cancha(id);
+    Object.assign(cancha, { fotos: foto });
+    return this.canchaRepository.save(cancha);
+  }
 }
