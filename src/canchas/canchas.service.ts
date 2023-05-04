@@ -37,9 +37,21 @@ export class CanchasService {
     return this.canchaRepository.remove(cancha);
   }
 
-  async addFoto(id: number, foto: string) {
+  async addFoto(id: number, datos: string) {
     const cancha = await this.findOne_cancha(id);
-    Object.assign(cancha, { fotos: foto });
+    const arreglo_fotos = JSON.parse(cancha.fotos) || [];
+    console.log(arreglo_fotos);
+    const fotos_nuevas = JSON.parse(datos);
+    const datos_enviar = JSON.stringify([...arreglo_fotos, fotos_nuevas]);
+    cancha.fotos = datos_enviar;
     return this.canchaRepository.save(cancha);
   }
+  
+  async verFotos(id: number) {
+    const cancha = await this.findOne_cancha(id);
+    return JSON.parse(cancha.fotos);
+  }
+
+  
+  
 }

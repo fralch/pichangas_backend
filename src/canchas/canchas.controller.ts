@@ -1,6 +1,8 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete , UseInterceptors, UploadedFile } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
+
+
 import { CanchasService } from './canchas.service';
 import { CreateCanchaDto } from './dto/create-cancha.dto';
 import { UpdateCanchaDto } from './dto/update-cancha.dto';
@@ -36,11 +38,19 @@ export class CanchasController {
       }
     })
   }))
-  async addFoto(@Param('id') id: string, @UploadedFile() file: Express.Multer.File) {
-    return this.canchasService.addFoto(+id, file.filename);
+  async addFoto(@Param('id') id: string, @Body('descripcion') descripcion : string  ,  @UploadedFile() file: Express.Multer.File) {
+    // console.log(descripcion);
+    const  datos =  JSON.stringify({
+      descripcion,
+      fotos: file.filename
+    })    
+    return this.canchasService.addFoto(+id, datos);
   }
 
-
+  @Get('fotos/:id')
+  async verFotos(@Param('id') id: string) {
+    return this.canchasService.verFotos(+id);
+  }
 
   @Get()
   findAll() {

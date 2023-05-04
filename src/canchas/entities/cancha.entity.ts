@@ -1,5 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, JoinColumn, OneToMany } from 'typeorm';
 import { Horario } from '../../horarios/entities/horario.entity';
+import { type } from 'os';
 
 
 @Entity()
@@ -17,12 +18,15 @@ export class Cancha {
     direccion: string;
 
     @Column()
+    horario: string;
+
+    @Column()
     email: string;
 
     @Column()
     password: string;
 
-    @Column({nullable: true})
+    @Column({type: "longtext", nullable: true})
     fotos: string;
 
     @Column()
