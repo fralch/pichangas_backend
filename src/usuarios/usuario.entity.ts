@@ -6,13 +6,13 @@ export class Usuario{
     @Column({primary: true, generated: true})
     id: number;
 
-    @Column({unique: true})
+    @Column({nullable: true})
     usuario: string;
 
     @Column()
     nombre: string;
 
-    @Column()
+    @Column({nullable: true})
     apellido: string;
 
     @Column()
@@ -24,10 +24,10 @@ export class Usuario{
     @Column({nullable: true})
     foto: string;
 
-    @Column()
+    @Column({nullable: true})
     telefono: string;
 
-    @Column()
+    @Column({nullable: true})
     direccion: string;
 
     @Column()
