@@ -35,6 +35,11 @@ export class UsuariosController {
         return this.usuariosService.remove(+id);
     }
   
+    @Post('login')
+    checkUser(@Body('email') email: string, @Body('password') password: string) {
+        return this.usuariosService.checkUser(email, password);
+    }
+    
 
     
 }

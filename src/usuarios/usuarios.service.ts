@@ -39,4 +39,15 @@ export class UsuariosService {
         const user = await this.findOne_user(id);
         return this.usersRepository.remove(user);
       }
+
+      async checkUser(email: string, password: string) {
+        const user = await this.usersRepository.findOne({ where: { email } });
+        if (!user) {
+          throw new Error(`User #${email} not found`);
+        }
+        if (user.password !== password) {
+          throw new Error('Wrong password');
+        }
+        return user;
+      }
 }
