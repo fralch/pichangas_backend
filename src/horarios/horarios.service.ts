@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { CreateHorarioDto } from './dto/create-horario.dto';
 import { Horario } from './entities/horario.entity'; 
 import { UpdateHorarioDto } from './dto/update-horario.dto';
+import { error } from 'console';
 
 
 @Injectable()
@@ -12,6 +13,14 @@ export class HorariosService {
 
 
   create(createHorarioDto: CreateHorarioDto) {
+    const hora= createHorarioDto.hora;
+    const existe = this.horarioRepository
+    .createQueryBuilder('horario')
+    .where('horario.hora = :hora', {hora: hora})
+    .getOne();
+    if(existe){
+      throw new error('El horario ya existe');
+    }
     const nuevo = this.horarioRepository.create(createHorarioDto);
     return this.horarioRepository.save(nuevo);
   }
