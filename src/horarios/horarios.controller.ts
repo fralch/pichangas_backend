@@ -17,9 +17,11 @@ export class HorariosController {
     return this.horariosService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.horariosService.findOne(+id);
+  @Post('diario')
+  findOne(@Body() ids: object) {
+    const id = ids['cancha_id'];
+    const id2 = ids['usuario_id'];
+    return this.horariosService.findOnebyCancha(+id, +id2);    
   }
 
   @Patch(':id')

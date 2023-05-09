@@ -17,11 +17,24 @@ export class HorariosService {
   }
 
   findAll() {
-    return `This action returns all horarios`;
+    return this.horarioRepository
+    .createQueryBuilder('horario')
+    .innerJoinAndSelect('horario.cancha_id', 'cancha')
+    .innerJoinAndSelect('horario.usuario_id', 'usuario')
+    .select(['horario.id', 'horario.hora', 'horario.estado', 'horario.fecha', 'cancha.id', 'usuario.id'])
+    .getMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} horario`;
+  findOnebyCancha( cancha_id: number, usuario_id: number) { 
+    return this.horarioRepository
+    .createQueryBuilder('horario')
+    .innerJoinAndSelect('horario.cancha_id', 'cancha')
+    .innerJoinAndSelect('horario.usuario_id', 'usuario')
+    .where('horario.cancha_id = :cancha_id', {cancha_id: cancha_id})
+    .andWhere('horario.usuario_id = :usuario_id', {usuario_id: usuario_id})
+    .select(['horario.id', 'horario.hora', 'horario.estado', 'horario.fecha', 'cancha.id', 'usuario.id'])
+    .getMany();
+   
   }
 
   update(id: number, updateHorarioDto: UpdateHorarioDto) {
