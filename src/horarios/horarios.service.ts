@@ -13,11 +13,13 @@ export class HorariosService {
 
  async create(createHorarioDto: CreateHorarioDto) {
     const hora = createHorarioDto.hora;
+    const cancha_id = createHorarioDto.cancha_id;
+   
     const existe = await this.horarioRepository
       .createQueryBuilder('horario')
-      .where('horario.hora = :hora', { hora: hora })
+      .where('horario.cancha_id = :cancha_id', { cancha_id: cancha_id })
+      .andWhere('horario.hora = :hora', { hora: hora })
       .getOne();
-
     if (existe) {
       console.log('Ya existe un horario con esa hora');
       return 0 ; 
