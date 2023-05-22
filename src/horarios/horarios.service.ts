@@ -52,7 +52,9 @@ export class HorariosService {
   }
 
   update(id: number, updateHorarioDto: UpdateHorarioDto) {
-    return `This action updates a #${id} horario`;
+    
+    return this.horarioRepository.update(id, updateHorarioDto);
+
   }
 
   remove(id: number) {
