@@ -58,6 +58,6 @@ export class HorariosService {
   }
 
   remove(id: number) {
-    return `This action removes a #${id} horario`;
+    return this.horarioRepository.delete(id);
   }
 }
