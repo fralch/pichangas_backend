@@ -7,6 +7,7 @@ import { UsuariosModule } from './usuarios/usuarios.module';
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { HorariosModule } from './horarios/horarios.module';
 import { CanchasModule } from './canchas/canchas.module';
+import { GptModule } from './gpt/gpt.module';
 
 @Module({
   imports: [
@@ -26,7 +27,8 @@ import { CanchasModule } from './canchas/canchas.module';
     }),
     UsuariosModule,
     CanchasModule,
-    HorariosModule],
+    HorariosModule,
+    GptModule],
   controllers: [AppController],
   providers: [AppService],
 })
